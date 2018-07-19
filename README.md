@@ -12,3 +12,7 @@ Screenshots
 ![screenshot_2018-07-19-23-52-26](https://user-images.githubusercontent.com/20029287/42963128-ffb7502c-8bb0-11e8-9041-6542afbb6754.png)
 ![screenshot_2018-07-19-23-52-38](https://user-images.githubusercontent.com/20029287/42963136-04c24252-8bb1-11e8-85be-f17178637cdc.png)
 ![screenshot_2018-07-19-23-52-49](https://user-images.githubusercontent.com/20029287/42963152-0f4c028a-8bb1-11e8-82da-1304a5155794.png)
+
+API Key
+=
+Replace "YOUR_API_KEY_HERE" in strings.xml and TmdbRestClient.xml with your API Key.
