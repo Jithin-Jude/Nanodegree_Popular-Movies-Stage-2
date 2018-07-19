@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Movie Bazaar</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="favorites">Favorites</string>
+
+    <string name="THEMOVIEDB_API_KEY">YOUR_API_KEY_HERE</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="poster_image_url_start">http://image.tmdb.org/t/p/w185/</string>
+    <string name="backbrop_url_start">http://image.tmdb.org/t/p/w780/</string>
+    <string name="backdrop_image">Backdrop Image</string>
+    <string name="poster_image">Poster Image</string>
+
+    <string name="no_review">No Review</string>
+    <string name="no_reviews">Users are yet to review this movie.</string>
+    <string name="movie_delete_notify">Movie deleted from favorites</string>
+    <string name="movie_add_notify">Movie added to favorites</string>
+</resources>

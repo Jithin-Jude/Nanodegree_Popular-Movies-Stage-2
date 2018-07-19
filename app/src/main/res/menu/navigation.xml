@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_most_popular"
+        android:icon="@drawable/ic_star_border_white_24dp"
+        android:title="@string/most_popular" />
+    <item
+        android:id="@+id/navigation_top_rated"
+        android:icon="@drawable/ic_poll_white_24dp"
+        android:title="@string/top_rated" />
+    <item
+        android:id="@+id/navigation_favorites"
+        android:icon="@drawable/ic_favorite_border_white_24dp"
+        android:title="@string/favorites" />
+
+</menu>
