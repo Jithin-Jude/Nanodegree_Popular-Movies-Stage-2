@@ -15,4 +15,4 @@ Screenshots
 
 API Key
 =
-Replace "YOUR_API_KEY_HERE" in strings.xml and TmdbRestClient.xml with your API Key.
+Replace "YOUR_API_KEY_HERE" in strings.xml and TmdbRestClient.java with your API Key.
