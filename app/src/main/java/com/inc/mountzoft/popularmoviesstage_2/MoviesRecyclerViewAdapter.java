@@ -41,7 +41,9 @@ class MoviesRecyclerViewAdapter extends RecyclerView.Adapter <MoviesRecyclerView
     @Override
     public int getItemCount() {
         if(fav){
-            return RoomDatabaseInitializer.roomMovieEntityList.size();
+            try {
+                return RoomDatabaseInitializer.roomMovieEntityList.size();
+            }catch (Exception e){}
         }
         return movies.size();
     }

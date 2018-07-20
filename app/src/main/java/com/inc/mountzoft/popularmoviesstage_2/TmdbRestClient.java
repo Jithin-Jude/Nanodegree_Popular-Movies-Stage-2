@@ -61,7 +61,7 @@ public class TmdbRestClient {
                         Request request = chain.request();
                         HttpUrl url = request.url()
                                 .newBuilder()
-                                .addQueryParameter("api_key", "YOUR_API_KEY_HERE")
+                                .addQueryParameter("api_key", BuildConfig.MY_MOVIE_DB_API_KEY)
                                 .build();
                         Request.Builder builder = request.newBuilder()
                                 .url(url)

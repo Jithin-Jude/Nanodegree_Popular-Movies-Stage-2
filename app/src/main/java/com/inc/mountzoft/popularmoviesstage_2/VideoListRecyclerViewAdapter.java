@@ -57,7 +57,7 @@ public class VideoListRecyclerViewAdapter extends RecyclerView.Adapter<VideoRecy
         //MovieVideo catagory_recyclerview_content = videos.get(pos);
 
         this.position = position;
-        holder.rowText.setText(videos.get(position).getName());
+        holder.rowText.setText(videos.get(holder.getAdapterPosition()).getName());
         Glide.with(context)
                 .load(String.format(YOUTUBE_THUMBNAIL_URL, videos.get(position).getKey()))
                 .apply(new RequestOptions()

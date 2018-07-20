@@ -330,6 +330,10 @@ public class MovieDetails extends AppCompatActivity {
                 RoomDatabaseInitializer.populateAsync(RoomMovieDatabase.getAppDatabase(this));
                 Toast.makeText(this, R.string.movie_delete_notify ,Toast.LENGTH_SHORT).show();
                 favBtn.setImageResource(R.drawable.ic_favorite_border_red_24dp);
+                del = false;
+                MainActivity.insertData = false;
+                RoomDatabaseInitializer.populateAsync(RoomMovieDatabase.getAppDatabase(this));
+                finish();
                 return;
             }
           if(isAlreadyFavorite()){
@@ -339,6 +343,9 @@ public class MovieDetails extends AppCompatActivity {
                 this.deleteMovieId = MainActivity.movies.get(position).getId();
                 Toast.makeText(this,R.string.movie_delete_notify ,Toast.LENGTH_SHORT).show();
                 favBtn.setImageResource(R.drawable.ic_favorite_border_red_24dp);
+                del = false;
+                MainActivity.insertData = false;
+                RoomDatabaseInitializer.populateAsync(RoomMovieDatabase.getAppDatabase(this));
            }else{
                 movieId = MainActivity.movies.get(position).getId();
                 movieName = MainActivity.movies.get(position).getTitle();
@@ -357,6 +364,9 @@ public class MovieDetails extends AppCompatActivity {
                 RoomDatabaseInitializer.populateAsync(RoomMovieDatabase.getAppDatabase(this));
                 Toast.makeText(this, R.string.movie_add_notify, Toast.LENGTH_SHORT).show();
                 favBtn.setImageResource(R.drawable.ic_favorite_red_24dp);
+                del = false;
+                MainActivity.insertData = false;
+                RoomDatabaseInitializer.populateAsync(RoomMovieDatabase.getAppDatabase(this));
             }
         }else{
             del = true;
@@ -365,6 +375,10 @@ public class MovieDetails extends AppCompatActivity {
             RoomDatabaseInitializer.populateAsync(RoomMovieDatabase.getAppDatabase(this));
             Toast.makeText(this,R.string.movie_delete_notify ,Toast.LENGTH_SHORT).show();
             favBtn.setImageResource(R.drawable.ic_favorite_border_red_24dp);
+            del = false;
+            MainActivity.insertData = false;
+            RoomDatabaseInitializer.populateAsync(RoomMovieDatabase.getAppDatabase(this));
+            finish();
             return;
         }
     }

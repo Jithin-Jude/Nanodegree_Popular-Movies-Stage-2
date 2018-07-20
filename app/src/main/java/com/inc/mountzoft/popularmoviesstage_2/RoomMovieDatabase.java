@@ -12,13 +12,16 @@ public abstract class RoomMovieDatabase extends RoomDatabase {
 
         public abstract RoomMovieDao roomMovieDao();
 
+    private static final Object LOCK = new Object();
     public static RoomMovieDatabase getAppDatabase(Context context) {
         if (INSTANCE == null) {
-            INSTANCE =
-                    Room.databaseBuilder(context.getApplicationContext(), RoomMovieDatabase.class, "user-database")
-                            // allow queries on the main thread.
-                            .allowMainThreadQueries()
-                            .build();
+            synchronized (LOCK) {
+                INSTANCE =
+                        Room.databaseBuilder(context.getApplicationContext(), RoomMovieDatabase.class, "user-database")
+                                // allow queries on the main thread.
+                                .allowMainThreadQueries()
+                                .build();
+            }
         }
         return INSTANCE;
     }

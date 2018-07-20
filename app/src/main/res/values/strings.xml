@@ -4,7 +4,6 @@
     <string name="most_popular">Most Popular</string>
     <string name="favorites">Favorites</string>
 
-    <string name="THEMOVIEDB_API_KEY">YOUR_API_KEY_HERE</string>
     <string name="synopsis">Synopsis</string>
     <string name="poster_image_url_start">http://image.tmdb.org/t/p/w185/</string>
     <string name="backbrop_url_start">http://image.tmdb.org/t/p/w780/</string>

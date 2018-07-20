@@ -6,7 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+
 public class MoviesRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    String POSITION_ID = "position_id";
+
     ImageView mImageView;
     RecyclerViewClickListener itemClickListener;
     Context context;
@@ -21,7 +25,7 @@ public class MoviesRecyclerViewHolder extends RecyclerView.ViewHolder implements
     public void onClick(View view) {
         this.itemClickListener.onItemClick(this.getLayoutPosition());
         Intent intent = new Intent(context,MovieDetails.class);
-        intent.putExtra("POSITION_ID", getAdapterPosition());
+        intent.putExtra(POSITION_ID, getAdapterPosition());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
