@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 public class MoviesRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    String POSITION_ID = "position_id";
+    public static String POSITION_ID = "position_id";
 
     ImageView mImageView;
     RecyclerViewClickListener itemClickListener;

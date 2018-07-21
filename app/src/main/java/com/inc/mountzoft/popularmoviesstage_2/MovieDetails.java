@@ -119,7 +119,7 @@ public class MovieDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
         movie = intent.getParcelableExtra("INTENT_MOVIE_DETAIL");
-        position = getIntent().getIntExtra("POSITION_ID", 0);
+        position = getIntent().getIntExtra(MoviesRecyclerViewHolder.POSITION_ID, 0);
 
         if(isNetworkAvailable()) {
             boolean setFBtn = isAlreadyFavorite();

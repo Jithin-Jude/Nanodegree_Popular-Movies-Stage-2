@@ -38,10 +38,12 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    private final String KEY_RECYCLER_STATE = "recycler_state";
-    private static Bundle mBundleRecyclerViewState;
     GridAutofitLayoutManager layoutManager;
-    Parcelable mListState;
+
+    private final String KEY_RECYCLER_STATE = "recycler_state";
+    private Parcelable recyclerViewState;
+
+    boolean firstTime = true;
 
     private ActionBar toolbar;
 
@@ -62,7 +64,10 @@ public class MainActivity extends AppCompatActivity {
         apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         if(isNetworkAvailable()) {
-            //loadPopularMovies();
+            if(firstTime) {
+                firstTime = false;
+                loadPopularMovies();
+            }
         }
 
         if(MoviesRecyclerViewAdapter.fav) {
@@ -72,28 +77,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+
+        // Save list state
+        recyclerViewState = layoutManager.onSaveInstanceState();
+        state.putParcelable(KEY_RECYCLER_STATE, recyclerViewState);
+    }
+
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+
+        // Retrieve list state and list/item positions
+        if(state != null)
+            recyclerViewState = state.getParcelable(KEY_RECYCLER_STATE);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(popular){
-            toolbar.setTitle(R.string.most_popular);
-            loadPopularMovies();
-        }
+        Log.d("reached", "on_resume");
 
-        if(topRated){
-            toolbar.setTitle(R.string.top_rated);
-            loadTopRatedMovies();
-        }
-
-        if(MoviesRecyclerViewAdapter.fav) {
-            toolbar.setTitle(R.string.favorites);
-            loadFavoriteMovies();
-            mRecyclerView.setVisibility(View.VISIBLE);
+        if (recyclerViewState != null) {
+            layoutManager.onRestoreInstanceState(recyclerViewState);
+            Log.d("reached", "on_resume inside if");
         }
     }
 
