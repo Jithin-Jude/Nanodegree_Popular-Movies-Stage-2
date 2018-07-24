@@ -41,7 +41,9 @@ public class VideoListRecyclerViewAdapter extends RecyclerView.Adapter<VideoRecy
     }
 
     public void setVideos(ArrayList<MovieVideo> videos) {
-        this.videos.addAll(videos);
+        try{
+            this.videos.addAll(videos);
+        }catch (Exception e){}
     }
 
     // inflates the row layout from xml when needed

@@ -43,7 +43,7 @@ class MoviesRecyclerViewAdapter extends RecyclerView.Adapter <MoviesRecyclerView
         if(fav){
             try {
                 return RoomDatabaseInitializer.roomMovieEntityList.size();
-            }catch (Exception e){}
+            }catch (Exception e){return 0; }
         }
         return movies.size();
     }

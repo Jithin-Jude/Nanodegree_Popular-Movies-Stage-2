@@ -253,8 +253,9 @@ public class MovieDetails extends AppCompatActivity {
                     ArrayList<MovieVideo> videos = new ArrayList<>();
                     videos.add(video);
                     video = null;
-
-                    movie.setMovieVideos(videos);
+                    try{
+                        movie.setMovieVideos(videos);
+                    }catch(Exception e){}
                 }
                 setupMovieVideos();
             }

@@ -38,12 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    GridAutofitLayoutManager layoutManager;
 
     private final String KEY_RECYCLER_STATE = "recycler_state";
-    private Parcelable recyclerViewState;
-
-    boolean firstTime = true;
+    Parcelable mListState;
+    GridAutofitLayoutManager mLayoutManager;
 
     private ActionBar toolbar;
 
@@ -57,54 +55,67 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = getSupportActionBar();
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        toolbar.setTitle("Most Popular");
 
         API_KEY = BuildConfig.MY_MOVIE_DB_API_KEY;
 
         apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        if(isNetworkAvailable()) {
-            if(firstTime) {
-                firstTime = false;
-                loadPopularMovies();
-            }
-        }
 
-        if(MoviesRecyclerViewAdapter.fav) {
-            toolbar.setTitle(R.string.favorites);
-            loadFavoriteMovies();
-            mRecyclerView.setVisibility(View.VISIBLE);
-        }
+        mLayoutManager = new GridAutofitLayoutManager(getApplicationContext(), 200);
+        mRecyclerView.setLayoutManager(mLayoutManager);
     }
-
 
     protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
 
         // Save list state
-        recyclerViewState = layoutManager.onSaveInstanceState();
-        state.putParcelable(KEY_RECYCLER_STATE, recyclerViewState);
+        mListState = mLayoutManager.onSaveInstanceState();
+        state.putParcelable(KEY_RECYCLER_STATE, mListState);
+        Log.d("reached","inside onSaveInstanceState");
     }
 
     protected void onRestoreInstanceState(Bundle state) {
         super.onRestoreInstanceState(state);
+        Log.d("reached","inside onRestoreInstanceState");
 
         // Retrieve list state and list/item positions
-        if(state != null)
-            recyclerViewState = state.getParcelable(KEY_RECYCLER_STATE);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("reached", "on_resume");
-
-        if (recyclerViewState != null) {
-            layoutManager.onRestoreInstanceState(recyclerViewState);
-            Log.d("reached", "on_resume inside if");
+        if(state != null) {
+            mListState = state.getParcelable(KEY_RECYCLER_STATE);
+            Log.d("reached","inside onRestoreInstanceState if");
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(popular){toolbar.setTitle(R.string.most_popular);}
+        if(topRated){toolbar.setTitle(R.string.top_rated);}
+
+        Log.d("reached","inside onResume");
+
+        if (mListState != null) {
+            mLayoutManager.onRestoreInstanceState(mListState);
+            if(MoviesRecyclerViewAdapter.fav) {
+                mRecyclerView.setAdapter(new MoviesRecyclerViewAdapter(getApplicationContext(), movies, true, true));
+                toolbar.setTitle(R.string.favorites);
+            }else {
+                mRecyclerView.setAdapter(new MoviesRecyclerViewAdapter(getApplicationContext(), movies, false, true));
+            }
+            Log.d("reached","inside onResume if");
+        }else {
+            Call<MovieResponse> callForMostPopularMovies = apiService.getPopularMovies(API_KEY);
+            callForMostPopularMovies.enqueue(new Callback<MovieResponse>() {
+                @Override
+                public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                    movies = response.body().getResults();
+                    mRecyclerView.setAdapter(new MoviesRecyclerViewAdapter(getApplicationContext(), movies, false, true));
+                }
+
+                @Override
+                public void onFailure(Call<MovieResponse> call, Throwable t) {}
+            });
+        }
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -157,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
-//==================================================================================================
+//=====================================loadFavoriteMovies==========================================
     public void loadFavoriteMovies(){
 
         if(isNetworkAvailable()){
@@ -170,8 +181,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<MovieResponse>call, Response<MovieResponse> response) {
                     movies = response.body().getResults();
-                    layoutManager = new GridAutofitLayoutManager(getApplicationContext(), 200);
-                    mRecyclerView.setLayoutManager(layoutManager);
                     mRecyclerView.setAdapter(new MoviesRecyclerViewAdapter(getApplicationContext(), true, true));
                 }
 
@@ -183,20 +192,18 @@ public class MainActivity extends AppCompatActivity {
             insertData = false;
             RoomDatabaseInitializer.populateAsync(RoomMovieDatabase.getAppDatabase(this));
 
-            layoutManager = new GridAutofitLayoutManager(getApplicationContext(), 200);
-            mRecyclerView.setLayoutManager(layoutManager);
+            mLayoutManager = new GridAutofitLayoutManager(getApplicationContext(), 200);
+            mRecyclerView.setLayoutManager(mLayoutManager);
             mRecyclerView.setAdapter(new MoviesRecyclerViewAdapter(getApplicationContext(), true, false));
         }
     }
-//==================================================================================================
+//=================================loadPopularMovies===============================================
 public void loadPopularMovies(){
     Call<MovieResponse> callForMostPopularMovies = apiService.getPopularMovies(API_KEY);
     callForMostPopularMovies.enqueue(new Callback<MovieResponse>() {
         @Override
         public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
             movies = response.body().getResults();
-            layoutManager = new GridAutofitLayoutManager(getApplicationContext(), 200);
-            mRecyclerView.setLayoutManager(layoutManager);
             mRecyclerView.setAdapter(new MoviesRecyclerViewAdapter(getApplicationContext(), movies, false, true));
         }
 
@@ -204,15 +211,13 @@ public void loadPopularMovies(){
         public void onFailure(Call<MovieResponse> call, Throwable t) {}
     });
 }
-//==================================================================================================
+//====================================loadTopRatedMovies========================================
 public void loadTopRatedMovies(){
     Call<MovieResponse> callForTopRatedMovies = apiService.getTopRatedMovies(API_KEY);
     callForTopRatedMovies.enqueue(new Callback<MovieResponse>() {
         @Override
         public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
             movies = response.body().getResults();
-            layoutManager = new GridAutofitLayoutManager(getApplicationContext(), 200);
-            mRecyclerView.setLayoutManager(layoutManager);
             mRecyclerView.setAdapter(new MoviesRecyclerViewAdapter(getApplicationContext(), movies, false, true));
         }
 
