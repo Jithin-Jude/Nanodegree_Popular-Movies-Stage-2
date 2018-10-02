@@ -1,6 +1,6 @@
 [![Scholarship Google](https://img.shields.io/badge/scholarship-Google-brightgreen.svg)](https://in.udacity.com/google-india-scholarships)
 [![Udacity Nanodegree](https://img.shields.io/badge/Udacity-Nanodegree-blue.svg)](https://in.udacity.com/course/android-developer-nanodegree-by-google--nd801)
-[![License MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/Jithin-Jude/Nanodegree_Popular-Movies-Stage-1/blob/master/LICENSE) 
+[![License MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/Jithin-Jude/Nanodegree_Popular-Movies-Stage-2/blob/master/LICENSE) 
 
 ![banner](https://user-images.githubusercontent.com/20029287/46324719-881b4680-c612-11e8-92b6-5bb5882b2abd.jpg)
 
